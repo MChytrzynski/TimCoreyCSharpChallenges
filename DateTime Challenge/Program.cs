@@ -1,4 +1,20 @@
-﻿using System;
+﻿// Primary Challenge
+// Capture a date from the console and
+// calculate how many days ago it was.
+// Then capture a time from the console
+// and calculate how many hours and
+// minutes ago it was (assume less than
+// now and not previous day).
+// Bonus Challenge
+// For times, allow the user to choose to
+// specify 12- or 24-hour format. For dates,
+// allow the user to specify
+// month/day/year or day/month/year
+// format based upon their choice. Also,
+// don’t assume times are not the previous
+// day
+
+using System;
 
 namespace Datetime_challenge
 {
