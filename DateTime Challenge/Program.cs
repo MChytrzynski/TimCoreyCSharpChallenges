@@ -15,6 +15,7 @@
 // day
 
 using System;
+using System.Globalization;
 
 namespace Datetime_challenge
 {
@@ -22,14 +23,35 @@ namespace Datetime_challenge
     {
         static void Main(string[] args)
         {
-            string inputDate ="02.11.19 12:45";
-            PrimaryChallenge(inputDate);
+            Console.WriteLine("Please specify the date and time");
+            string inputDate=Console.ReadLine();
+            Console.WriteLine("Please specify the date format. For example MM.dd.yy hh:mm tt");
+            string inputFormat=Console.ReadLine();
+            System.Console.WriteLine("Please choose between 12 and 24 hour format (12/24)");
+            string timeFormat=Console.ReadLine();
+            BonusChallenge(inputDate,inputFormat,timeFormat);
         }
         static void PrimaryChallenge(string inputDate){
             DateTime date=new DateTime();
             DateTime.TryParse(inputDate, out date);
             TimeSpan DateDifference = DateTime.UtcNow.Subtract(date);
             Console.WriteLine($"{DateDifference.Days} days and {DateDifference.Hours} hours passed since {inputDate}");
+        }
+        static void BonusChallenge(string inputDate, string inputFormat, string timeFormat){
+            CultureInfo cultureInfo = new CultureInfo("en");
+            DateTime result;
+            if(timeFormat=="12"){
+                DateTime.TryParseExact(inputDate,inputFormat,CultureInfo.InvariantCulture,DateTimeStyles.None, out result);
+            }
+            else{
+                DateTime.TryParseExact(inputDate,timeFormat,cultureInfo,DateTimeStyles.None, out result);
+            }
+            TimeSpan DateDifference = DateTime.UtcNow.Subtract(result);
+            if(DateDifference.Milliseconds<0){
+                DateDifference.Negate();
+            }
+            Console.WriteLine($"{DateDifference.Days} days and {DateDifference.Hours} hours passed since {inputDate}");
+
         }
 
     }
