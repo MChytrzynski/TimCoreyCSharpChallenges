@@ -24,33 +24,39 @@ namespace Datetime_challenge
         static void Main(string[] args)
         {
             Console.WriteLine("Please specify the date and time");
-            string inputDate=Console.ReadLine();
+            string inputDate = Console.ReadLine();
             Console.WriteLine("Please specify the date format. For example MM.dd.yy hh:mm tt");
-            string inputFormat=Console.ReadLine();
+            string inputFormat = Console.ReadLine();
             System.Console.WriteLine("Please choose between 12 and 24 hour format (12/24)");
-            string timeFormat=Console.ReadLine();
-            BonusChallenge(inputDate,inputFormat,timeFormat);
+            string timeFormat = Console.ReadLine();
+            BonusChallenge(inputDate, inputFormat, timeFormat);
         }
-        static void PrimaryChallenge(string inputDate){
-            DateTime date=new DateTime();
+        static void PrimaryChallenge(string inputDate)
+        {
+            DateTime date = new DateTime();
             DateTime.TryParse(inputDate, out date);
             TimeSpan DateDifference = DateTime.UtcNow.Subtract(date);
             Console.WriteLine($"{DateDifference.Days} days and {DateDifference.Hours} hours passed since {inputDate}");
         }
-        static void BonusChallenge(string inputDate, string inputFormat, string timeFormat){
-            CultureInfo cultureInfo = new CultureInfo("en");
+        static void BonusChallenge(string inputDate, string inputFormat, string timeFormat)
+        {
             DateTime result;
-            if(timeFormat=="12"){
-                DateTime.TryParseExact(inputDate,inputFormat,CultureInfo.InvariantCulture,DateTimeStyles.None, out result);
+            string outputString = "passed since";
+            if (timeFormat == "12")
+            {
+                DateTime.TryParseExact(inputDate, inputFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out result);
             }
-            else{
-                DateTime.TryParseExact(inputDate,timeFormat,cultureInfo,DateTimeStyles.None, out result);
+            else
+            {
+                DateTime.TryParseExact(inputDate, inputFormat, CultureInfo.CreateSpecificCulture("en"), DateTimeStyles.None, out result);
             }
             TimeSpan DateDifference = DateTime.UtcNow.Subtract(result);
-            if(DateDifference.Milliseconds<0){
-                DateDifference.Negate();
+            if (DateDifference.Milliseconds < 0)
+            {
+                DateDifference = DateDifference.Negate();
+                outputString = "until";
             }
-            Console.WriteLine($"{DateDifference.Days} days and {DateDifference.Hours} hours passed since {inputDate}");
+            Console.WriteLine($"{DateDifference.Days} days and {DateDifference.Hours} hours {outputString} {inputDate}");
 
         }
 
